@@ -1,6 +1,6 @@
 #include <iostream>
 #include <math.h>
-#include <algorithm>
+
 using namespace std;
 
 struct point
@@ -23,12 +23,31 @@ void printTriangel(struct triangel * obj)
     cout << endl;
 }
 
-int typeOfTriangel(double c, double a, double b)
+bool typeOfTriangel(double c, double a, double b)
 {
-    if (c >= a + b) return 2;
-    if (pow(c,2) > pow(a,2) + pow(b,2)) return 1;
-    if (pow(c,2) < pow(a,2) + pow(b,2)) return -1;
+  //  cout << "typeOfTriangel " << c << "\t" << a << "\t" << b << endl;
+    if (pow(c,2) > pow(a,2) + pow(b,2)) return true;
     return false;
+}
+
+
+void sortSides (double * sides)
+{
+    double temp;
+
+    if (sides[0] >= sides[1] and sides[0] >= sides[2])
+    {
+        temp = sides[0];
+        sides[0] = sides[2];
+        sides[2] = temp;
+    }
+
+    if (sides[1] >= sides[0] and sides[1] >= sides[2])
+    {
+        temp = sides[1];
+        sides[1] = sides[2];
+        sides[2] = temp;
+    }
 }
 
 
@@ -40,7 +59,12 @@ bool check_obtuse_triangle(struct triangel & tr)
         sides[i] = hypot((tr.combs[i]->x - tr.combs[(i + 1) % 3]->x), (tr.combs[i]->y - tr.combs[(i + 1) % 3]->y));
     }
 
-      sort(sides, &sides[2]);
+      sortSides(sides);
+    //  cout << "check_obtuse_triangle" <<endl;
+//      for (int i = 0; i < 3; i++)
+//      {
+//          cout << sides[i] << endl;
+//      }
       if (typeOfTriangel(sides[2], sides[1], sides[0]) == 1) return true;
       return false;
 }

@@ -83,12 +83,13 @@ void searcher_ofobtuse_triangels(struct point* array, const unsigned int SIZE)
     {
         testee.combs[0] = &array[i];        //присваивам адрес i-той точки
         testee.combs[1] = &array[(i + 1) % SIZE];   //Прсваиваем адрес i+1 точки
-        for (unsigned int j = (i + 2) % SIZE; j < (i + 2) % SIZE + 3; j++)  //Перебираем 3-ю точку
+        cout << "i++" << endl;
+        for (unsigned int j = 0; j < SIZE; j++)  //Перебираем 3-ю точку
         {
             //cout << i << " " << (i + 1) % 3 << " " << (j+2) % SIZE << endl;
-            if((j + 1) % SIZE == i) continue;       //Исключаем повторяющиеся треугольник
-            testee.combs[2] = &array[(j+2) % SIZE];
-            //cout << i << " " << (i + 1) % 3 << " " << (j+2) % SIZE << endl;
+            if((j + 1) % SIZE == i or j == i or j == (i + 1) % SIZE) continue;       //Исключаем повторяющиеся треугольник
+            testee.combs[2] = &array[j];
+           cout << i << " " << (i + 1) % SIZE << " " << j << endl;
 
           if(check_obtuse_triangle(testee))     //отправляем на проверку и если вернулось 1, то распечатываем
           {
